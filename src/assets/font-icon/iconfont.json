@@ -1,0 +1,37 @@
+{
+  "id": "1946009",
+  "name": "新闻app",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "554437",
+      "name": "地球",
+      "font_class": "iconset0403",
+      "unicode": "e71a",
+      "unicode_decimal": 59162
+    },
+    {
+      "icon_id": "1076758",
+      "name": "娱乐",
+      "font_class": "yule",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "2076359",
+      "name": " 国内游",
+      "font_class": "guoneiyou",
+      "unicode": "e8b6",
+      "unicode_decimal": 59574
+    },
+    {
+      "icon_id": "5175711",
+      "name": "跑步",
+      "font_class": "paobu",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    }
+  ]
+}
