@@ -12,22 +12,22 @@ Vue.use(VueRouter)
     children: [
       {
         path: '',
-        redirect: '/guonei'
+        redirect: '/home/guonei'
       },
       {
-        path: '/guonei',
+        path: '/home/guonei',
         component: () => import('../views/pages/guonei')
       },
       {
-        path: '/international',
+        path: '/home/international',
         component: () => import('../views/pages/international')
       },
       {
-        path: '/yule',
+        path: '/home/yule',
         component: () => import('../views/pages/yule')
       },
       {
-        path: '/others',
+        path: '/home/others',
         component: () => import('../views/pages/others')
       }
     ]
@@ -41,7 +41,6 @@ const originalPush = VueRouter.prototype.push
 }
 
 const router = new VueRouter({
-  mode: 'history',
   linkActiveClass: 'active',
   base: process.env.BASE_URL,
   routes

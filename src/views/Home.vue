@@ -5,33 +5,33 @@
     </div>
     <div class="tabs-container">
       <!-- <keep-alive> -->
-        <router-link tag="div" class="tab" to="/guonei">
+        <router-link tag="div" class="tab" to="/home/guonei">
           <div><i class="iconfont icon-guoneiyou"></i></div>
           <span>国内</span>
           <!-- 点击动画 -->
-          <div v-bind:class="{ 'animation': $route.path === '/guonei' }"></div>
+          <div v-bind:class="{ 'animation': $route.path === '/home/guonei' }"></div>
         </router-link>
       <!-- </keep-alive> -->
 
-      <router-link tag="div" class="tab" to="/international">
+      <router-link tag="div" class="tab" to="/home/international">
         <div><i class="iconfont icon-iconset0403"></i></div>
         <span>国际</span>
         <!-- 点击动画 -->
-        <div v-bind:class="{ 'animation': $route.path === '/international' }"></div>
+        <div v-bind:class="{ 'animation': $route.path === '/home/international' }"></div>
       </router-link>
 
-      <router-link tag="div" class="tab" to="/yule">
+      <router-link tag="div" class="tab" to="/home/yule">
         <div><i class="iconfont icon-yule"></i></div>
         <span>娱乐</span>
         <!-- 点击动画 -->
-        <div v-bind:class="{ 'animation': $route.path === '/yule' }"></div>
+        <div v-bind:class="{ 'animation': $route.path === '/home/yule' }"></div>
       </router-link>
 
-      <router-link tag="div" class="tab" to="/others">
+      <router-link tag="div" class="tab" to="/home/others">
         <div><i class="iconfont icon-paobu"></i></div>
         <span>其他</span>
         <!-- 点击动画 -->
-        <div v-bind:class="{ 'animation': $route.path === '/others' }"></div>
+        <div v-bind:class="{ 'animation': $route.path === '/home/others' }"></div>
       </router-link>
     </div>
   </div>  
