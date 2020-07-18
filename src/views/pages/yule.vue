@@ -1,6 +1,6 @@
 <!--  -->
 <template>
- <div>yule</div>
+ <div></div>
 </template>
 
 <script>

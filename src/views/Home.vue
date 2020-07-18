@@ -4,31 +4,29 @@
       <router-view></router-view>
     </div>
     <div class="tabs-container">
-      <!-- <keep-alive> -->
-        <router-link tag="div" class="tab" to="/home/guonei">
-          <div><i class="iconfont icon-guoneiyou"></i></div>
-          <span>国内</span>
-          <!-- 点击动画 -->
-          <div v-bind:class="{ 'animation': $route.path === '/home/guonei' }"></div>
-        </router-link>
-      <!-- </keep-alive> -->
+      <router-link tag="div" class="tab" to="guonei">
+        <div><i class="iconfont icon-guoneiyou"></i></div>
+        <span>国内</span>
+        <!-- 点击动画 -->
+        <div v-bind:class="{ 'animation': $route.path === '/home/guonei' }"></div>
+      </router-link>
 
-      <router-link tag="div" class="tab" to="/home/international">
+      <router-link tag="div" class="tab" to="international">
         <div><i class="iconfont icon-iconset0403"></i></div>
         <span>国际</span>
         <!-- 点击动画 -->
         <div v-bind:class="{ 'animation': $route.path === '/home/international' }"></div>
       </router-link>
 
-      <router-link tag="div" class="tab" to="/home/yule">
+      <router-link tag="div" class="tab" to="yule">
         <div><i class="iconfont icon-yule"></i></div>
         <span>娱乐</span>
         <!-- 点击动画 -->
         <div v-bind:class="{ 'animation': $route.path === '/home/yule' }"></div>
       </router-link>
 
-      <router-link tag="div" class="tab" to="/home/others">
-        <div><i class="iconfont icon-paobu"></i></div>
+      <router-link tag="div" class="tab" to="others">
+        <div><i class="iconfont icon-qita"></i></div>
         <span>其他</span>
         <!-- 点击动画 -->
         <div v-bind:class="{ 'animation': $route.path === '/home/others' }"></div>
@@ -56,13 +54,12 @@ export default {
 
 <style scoped>
 .home {
+  position: relative;
   height: 100%;
 }
+/* 加载页面容器样式 */
 .pages-container {
   height: 100%;
-  padding: 10px 15px 60px 15px;
-  overflow: hidden;
-  overflow-y: auto;
   background-color: #f7f7f7;
 }
 
@@ -83,7 +80,7 @@ export default {
   text-align: center;
   flex-grow: 1;
   font-size: 12px;
-  padding: 10px 0 10px 0;
+  padding: 6.5px 0 6.5px 0;
 }
 .tab div i {
   font-size: 18px;
@@ -95,14 +92,14 @@ export default {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(18, 178, 187, 0.08);
-  animation: abc 400ms 1;
+  animation: abc 300ms 1;
 }
 @keyframes abc {
-  from {
+  0% {
     width: 0;
     height: 0;
   }
-  to{
+  100%{
     width: 100%;
     height: 100%;
   }

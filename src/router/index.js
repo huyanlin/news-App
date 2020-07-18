@@ -6,31 +6,40 @@ Vue.use(VueRouter)
 
   const routes = [
   {
-    path: '/',
-    name: 'Home',
+    path: '',
+    redirect: '/home'     // 重定向
+  },
+  {
+    path: '/home',
     component: Home,
     children: [
       {
         path: '',
-        redirect: '/home/guonei'
+        redirect: 'guonei'    // 重定向
       },
       {
-        path: '/home/guonei',
+        path: 'guonei',
         component: () => import('../views/pages/guonei')
       },
       {
-        path: '/home/international',
+        path: 'international',
         component: () => import('../views/pages/international')
       },
       {
-        path: '/home/yule',
+        path: 'yule',
         component: () => import('../views/pages/yule')
       },
       {
-        path: '/home/others',
-        component: () => import('../views/pages/others')
+        path: 'others',
+        component: () => import('../views/pages/others'),
+        meta: ['其他新闻']
       }
     ]
+  },
+  {
+    path: '/typeLableAdd',
+    component: () => import('../views/pages/typeLableAdd'),
+    meta: ['类别管理']
   }
 ]
 
@@ -42,8 +51,15 @@ const originalPush = VueRouter.prototype.push
 
 const router = new VueRouter({
   linkActiveClass: 'active',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
+
+// 全局路由守卫
+router.beforeEach((to, from, next) => {
+  next()
+})
+
 
 export default router

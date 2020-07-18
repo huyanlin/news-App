@@ -1,13 +1,24 @@
 <!--  -->
 <template>
- <div>sdadad</div>
+ <div class="international">
+   <loading></loading>
+ </div>
 </template>
 
 <script>
+import loading from '@/components/loading'
 export default {
-  name: 'internation'
+  name: 'internation',
+  components: {
+    loading,
+  }
 }
 
 </script>
-<style lang='scss' scoped>
+<style scoped>
+.international {
+  height: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
 </style>
