@@ -70,7 +70,6 @@ export default {
 <style scoped>
 .lable {
   height: 100%;
-  overflow: hidden;
   background-color: #f4f4f4;
 }
 /* 主体容器样式 */
@@ -103,7 +102,7 @@ export default {
 
 /* 内容样式 */
 .content {
-  height: 568px;
+  height: 100vh;
   padding: 20px 15px 20px 15px;
   overflow: hidden;
   overflow-y: auto;
@@ -119,6 +118,9 @@ export default {
   border-radius: 15px;
   margin-bottom: 20px;
   overflow: hidden;
+}
+.flex-content:last-child {
+  margin-bottom: 85px;
 }
 .lable-items {
   width: 108px;

@@ -9,12 +9,12 @@
           <img class="add" src="@/assets/img/add.png" alt="" @click="goToTypeAdd()">
         </div>
         <div class="nav">
-          <div class="items" v-for="(item, index) in changedLableList" :key="index" :class="{'item-color': index === itemIndex}" @click="onClick(index, item.url)">{{ item.name }}</div>
+          <div class="items" v-for="(item, index) in changedLableList" :key="index" :class="{'item-color': index === $store.state.itemIndex}" @click="onClick(index, item.url, item.name)">{{ item.name }}</div>
         </div>
       </div>
       <loading v-show="loadingFlag"></loading>
       <div class="content" v-show="!loadingFlag">
-        <newsList :newsList = '$store.state.newsList'></newsList>
+        <newsList :newsList = '$store.state.newsList' :typeName = 'typeName'></newsList>
       </div>
    </div>
  </div>
@@ -32,21 +32,25 @@ export default {
       loadingFlag: true,
       // 用于保存当前请求页面数据的url
       url: '',
+      // 用于保存当前所点击的新闻类型名称
+      typeName: '头条'
     }
   },
   methods: {
     goToTypeAdd() {
       this.$router.push('/typeLableAdd')
     },
-    onClick(index, url) {
-      this.itemIndex = index
+    onClick(index, url, typeName) {
+      this.typeName = typeName
+      this.$store.commit('changeItemIndex', index);
       this.url = url
       if(this.url !== this.$store.state.oldUrl) {
+        this.handleScroll()
         this.loadingFlag = true
         this.$store.commit('saveUrl', this.url)
         this.$http.get(this.url,  {
           "key": "fa63572e04fc04d2534dc83c9a3ee96a",
-          "num": "10"
+          "num": "20"
         },  response => {
           if (response.status >= 200 && response.status < 300) {
             this.$store.commit('changeNewsList', response.data.newslist);
@@ -54,10 +58,21 @@ export default {
               this.loadingFlag = false
             }, 400);
           } else {
+            console.log(response.message);
           }
         });
       }
-    }
+      
+    },
+    // 实现页面跳转，滚动条自动在顶部
+    handleScroll () { //改变元素content的scrollTop
+      var offsetTop = document.querySelector('.content').scrollTop;
+        document.querySelector('.content').scrollTop = 50
+        setTimeout(() => {
+          document.querySelector('.content').scrollTop = 0
+        }, 500);
+      
+    },
   },
   computed: {
     title() {
@@ -72,23 +87,24 @@ export default {
     newsList,
   },
   created() {
-    this.$http.get('topnews/index',  {
+    if (this.$store.state.initLoad) {
+      this.$http.get('topnews/index',  {
       "key": "fa63572e04fc04d2534dc83c9a3ee96a",
-      "num": "10"
-    },  response => {
-      if (response.status >= 200 && response.status < 300) {
-        console.log(response.data.newslist)
-        this.$store.commit('changeNewsList', response.data.newslist);
-        setTimeout(() => {
-          this.loadingFlag = false
-        }, 400);
-      } else {
-        console.log(response.message);
-      }
-    });
-  },
-  beforeDestroy() {
-    this.$store.commit('saveUrl', 'topnews/index')
+      "num": "20"
+      },  response => {
+        if (response.status >= 200 && response.status < 300) {
+          this.$store.commit('changeNewsList', response.data.newslist);
+          this.$store.commit('initLoad', false)
+          setTimeout(() => {
+            this.loadingFlag = false
+          }, 400);
+        } else {
+          console.log(response.message);
+        }
+      });
+    } else {
+      this.loadingFlag = false
+    }
   }
 }
 
@@ -96,13 +112,11 @@ export default {
 <style scoped>
 .others {
   height: 100%;
-  overflow: hidden;
-  overflow-y: auto;
   margin-bottom: 60px;
   background-color: #f4f4f4;
 }
 .container {
-  height: 79%;
+  height: 100%;
 }
 
 /* 头部样式 */
@@ -160,7 +174,7 @@ export default {
 /* 内容区域样式 */
 .content {
   position: relative;
-  height: 100%;
+  height: 94%;
   overflow: hidden;
   overflow-y: auto;
 }

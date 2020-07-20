@@ -21,5 +21,32 @@ export default {
   // 保存正在访问的url
   saveUrl(state, url) {
     state.oldUrl = url
+  },
+  initLoad(state, flag) {
+    state.initLoad = flag
+  },
+  // 修改访问新闻类型索引
+  changeItemIndex(state, index) {
+    state.itemIndex = index
+  },
+  // 更新新闻详情信息
+  changeNewsDetailsInfo (state, newsDetailsInfo) {
+    state.newsDetailsInfo = newsDetailsInfo
+  },
+  // 初始化tabs页面完成，修改状态
+  changeGuoNei(state, flag) {
+    state.guoNeiInitLoad = flag
+  },
+  changeinternational(state, flag) {
+    state.internationalInitLoad = flag
+  },
+  changeYuLe(state, flag) {
+    state.yuLeInitLoad = flag
+  },
+  changeGuoNeiNewsList(state, newList) {
+    state.guoNeiNewsList = newList
+  },
+  changeGuoWaiNewsList(state, newList) {
+    state.guoWaiNewsList = newList
   }
 }

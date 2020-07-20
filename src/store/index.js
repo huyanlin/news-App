@@ -30,7 +30,21 @@ export default new Vuex.Store({
     // 用于保存新闻列表
     newsList: [],
     // // 用于保存当前正在访问的url，防止重复访问
-    oldUrl: 'football/index'
+    oldUrl: 'topnews/index',
+    // 保存初始化加载状态
+    initLoad: true,
+    // 保存当前所访问的新闻类型index，以便返回时，页面不刷新
+    itemIndex: 0,
+    // 保存新闻详情信息
+    newsDetailsInfo: [],
+    // 用于保存国内新闻列表
+    guoNeiNewsList: [],
+    // 用于保存国内新闻列表
+    guoWaiNewsList: [],
+    // 监听tabs切换初始化页面
+    guoNeiInitLoad: true,
+    internationalInitLoad: true,
+    yuLeInitLoad: true
   },
   mutations
 })

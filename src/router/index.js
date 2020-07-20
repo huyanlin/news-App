@@ -40,6 +40,10 @@ Vue.use(VueRouter)
     path: '/typeLableAdd',
     component: () => import('../views/pages/typeLableAdd'),
     meta: ['类别管理']
+  },
+  {
+    path: '/newsdetails',
+    component: () => import('../views/pages/newsdetails')
   }
 ]
 

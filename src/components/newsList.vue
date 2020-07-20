@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="news-list">
-    <div class="content" v-for="(item) in newsList" :key="item">
+    <div class="content" v-for="(item) in newsList" :key="item.title" @click="goToNewsContent(item.url)">
       <div class="info">
         <div class="top">{{ item.title }}</div>
         <div class="foot">
@@ -22,14 +22,23 @@ export default {
   props: {
     newsList: {
       type: Array
+    },
+    typeName: {
+      type: String
     }
-  }
+  },
+  methods: {
+    goToNewsContent(htmlUrl) {
+      this.$router.push({ path: '/newsdetails', query: { title: this.typeName, url: htmlUrl } });
+    }
+  },
 }
 
 </script>
 <style scoped>
 .news-list{
   padding: 10px 15px 20px 15px;
+  margin-bottom: 80px;
 }
 
 .content {
@@ -38,11 +47,11 @@ export default {
   align-items: center;
   height: 75px;
   padding: 15px 0 15px 0;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
 }
 .info {
   position: relative;
-  width: 69%;
+  width: 68%;
   height: 75px;
 }
 .img {
@@ -63,6 +72,7 @@ export default {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  margin-right: 5px;
 }
 .foot {
   position: absolute;
