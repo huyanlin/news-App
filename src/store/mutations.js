@@ -48,5 +48,26 @@ export default {
   },
   changeGuoWaiNewsList(state, newList) {
     state.guoWaiNewsList = newList
+  },
+  changeYuLeNewsList(state, newList) {
+    state.yuLeNewsList = newList
+  },
+  // 向国内新闻中追加信息
+  AddGuoNeiNewsList(state, newList) {
+    for (const item of newList) {
+      state.guoNeiNewsList.push(item)
+    }
+  },
+  // 向国外新闻中追加信息
+  AddGuoWaiNewsList(state, newList) {
+    for (const item of newList) {
+      state.guoWaiNewsList.push(item)
+    }
+  },
+  // 向娱乐新闻中追加信息
+  AddYuLeNewsList(state, newList) {
+    for (const item of newList) {
+      state.yuLeNewsList.push(item)
+    }
   }
 }

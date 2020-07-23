@@ -17,27 +17,13 @@ Vue.use(VueCordova)
 Vue.use(VueLazyload, {
   preLoad: 0,
   listenEvent: ['scroll','whell','mousewhell','resize','animationend','transitionend','touchmove'],
-  loading: require('./assets/img/timg.gif'),
+  loading: require('./assets/img/loading.gif'),
   error: require('./assets/img/error.jpg')
 })
 
 Vue.prototype.$http = http;
 
 Vue.config.productionTip = false
-
-// main.js中， 全局路由钩子
-// router中的scrollBehavior仅在mode为history模式下有效
-// router.afterEach((to, from) => {
-//   let bodySrcollTop = document.body.scrollTop
-//   if (bodySrcollTop !== 0) {
-//     document.body.scrollTop = 0
-//     return
-//   }
-//   let docSrcollTop = document.documentElement.scrollTop
-//   if (docSrcollTop !== 0) {
-//     document.documentElement.scrollTop = 0
-//   }
-// })
 
 new Vue({
   router,

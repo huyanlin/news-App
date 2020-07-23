@@ -1,7 +1,10 @@
 <template>
   <div class="home">
     <div class="pages-container">
-      <router-view></router-view>
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
     <div class="tabs-container">
       <router-link tag="div" class="tab" to="guonei">

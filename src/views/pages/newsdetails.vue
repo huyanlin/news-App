@@ -7,22 +7,27 @@
         <img class="back" src="@/assets/img/back.png" alt="" @click="goBack()">
         <div class="title">{{ title }}</div>
       </div>
-      <div class="content">
-        <loading v-show="loadingFlag"></loading>
-        <frameset cols="100%" v-if="this.$store.state.newsDetailsInfo[0].content === ''">
-          <frame :src="this.$route.query.url" />
-        </frameset>
-        <div class="content-info" v-else v-for="(item, index) in this.$store.state.newsDetailsInfo" :key="index">
-          <div class="content-title">{{ item.title }}</div>
-          <div class="content-item" v-html="item.content"></div>
+      <scroll>
+        <div class="content">
+          <div class="load-style" v-show="loadingFlag">
+            <loading></loading>
+          </div>
+          <!-- <frameset cols="100%" v-if="this.$store.state.newsDetailsInfo[0].content === ''" v-show="!loadingFlag">
+            <frame :src="this.$route.query.url" />
+          </frameset>
+          <div class="content-info" v-else v-show="!loadingFlag" v-for="(item, index) in this.$store.state.newsDetailsInfo" :key="index">
+            <div class="content-title">{{ item.title }}</div>
+            <div class="content-item" v-html="item.content"></div>
+          </div> -->
         </div>
-      </div>
+      </scroll>
     </div>
   </div>
 </template>
 
 <script>
 import loading from '@/components/loading'
+import scroll from '@/components/common/scroll/scroll'
 
 export default {
   name: 'newsdetails',
@@ -33,11 +38,12 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1);
+      this.$router.back();
     }
   },
   components: {
-    loading
+    loading,
+    scroll
   },
   computed: {
     title() {
@@ -45,19 +51,19 @@ export default {
     }
   },
   created() {
-    this.$http.get('txapi/htmltext/index', {
-      "key": "fa63572e04fc04d2534dc83c9a3ee96a",
-      "url": this.$route.query.url
-    },  response => {
-      if (response.status >= 200 && response.status < 300) {
-        this.$store.commit('changeNewsDetailsInfo', response.data.newslist);
-        setTimeout(() => {
-          this.loadingFlag = false
-        }, 400);
-      } else {
-        console.log(response.message);
-      }
-    });
+    // this.$http.get('txapi/htmltext/index', {
+    //   "key": "fa63572e04fc04d2534dc83c9a3ee96a",
+    //   "url": this.$route.query.url
+    // },  response => {
+    //   if (response.status >= 200 && response.status < 300) {
+    //     this.$store.commit('changeNewsDetailsInfo', response.data.newslist);
+    //     setTimeout(() => {
+    //       this.loadingFlag = false
+    //     }, 600);
+    //   } else {
+    //     console.log(response.message);
+    //   }
+    // });
   },
 }
 
@@ -78,6 +84,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 999;
   height: 49px;
   background-color: rgb(16, 174, 181);
 }
@@ -114,7 +122,11 @@ export default {
 }
 .content-item {
   margin-top: 10px;
-  margin-bottom: 60px;
+}
+.load-style {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 .content-info>>> p {
   font-size: 14px;

@@ -17,7 +17,7 @@ body {
 #app {
   height: 100%;
 }
-img.find {
+/* img.find {
   display: none;
-}
+} */
 </style>

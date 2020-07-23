@@ -15,15 +15,16 @@ export default {
 .loading {
   position: relative;
   top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 0 15px 0px 15px;
   height: 100%;
   overflow: hidden;
-  background-color: #9e64ff;
+  background-color: #f6f6f6;
 }
 img {
-  width: 100%;
+  width: 15%;
+  position: absolute;
+  margin-top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

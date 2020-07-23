@@ -39,8 +39,10 @@ export default new Vuex.Store({
     newsDetailsInfo: [],
     // 用于保存国内新闻列表
     guoNeiNewsList: [],
-    // 用于保存国内新闻列表
+    // 用于保存国外新闻列表
     guoWaiNewsList: [],
+    // 用于保存娱乐新闻列表
+    yuLeNewsList: [],
     // 监听tabs切换初始化页面
     guoNeiInitLoad: true,
     internationalInitLoad: true,

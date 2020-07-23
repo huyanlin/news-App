@@ -76,7 +76,7 @@ export default {
   },
   computed: {
     title() {
-      return this.$route.meta.join()
+      return this.$route.meta.title
     },
     changedLableList() {
       return this.$store.state.changedLableList

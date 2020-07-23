@@ -37,8 +37,8 @@ export default {
 </script>
 <style scoped>
 .news-list{
-  padding: 10px 15px 20px 15px;
-  margin-bottom: 80px;
+  padding: 0 15px 0 15px;
+  /* margin-bottom: 80px; */
 }
 
 .content {

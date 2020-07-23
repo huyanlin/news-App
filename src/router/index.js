@@ -15,24 +15,36 @@ Vue.use(VueRouter)
     children: [
       {
         path: '',
-        redirect: 'guonei'    // 重定向
+        redirect: 'guonei',    // 重定向
       },
       {
         path: 'guonei',
-        component: () => import('../views/pages/guonei')
+        component: () => import('../views/pages/guonei'),
+        meta: {
+          keepAlive: true // 需要缓存
+        }
       },
       {
         path: 'international',
-        component: () => import('../views/pages/international')
+        component: () => import('../views/pages/international'),
+        meta: {
+          keepAlive: true // 需要缓存
+        }
       },
       {
         path: 'yule',
-        component: () => import('../views/pages/yule')
+        component: () => import('../views/pages/yule'),
+        meta: {
+          keepAlive: true // 需要缓存
+        }
       },
       {
         path: 'others',
         component: () => import('../views/pages/others'),
-        meta: ['其他新闻']
+        meta: {
+          keepAlive: false, // 需要缓存
+          title: '其他新闻'
+        }
       }
     ]
   },
@@ -43,7 +55,10 @@ Vue.use(VueRouter)
   },
   {
     path: '/newsdetails',
-    component: () => import('../views/pages/newsdetails')
+    component: () => import('../views/pages/newsdetails'),
+    meta: {
+      keepAlive: true // 需要缓存
+    }
   }
 ]
 
@@ -57,7 +72,7 @@ const router = new VueRouter({
   linkActiveClass: 'active',
   // mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
 })
 
 // 全局路由守卫
