@@ -7,7 +7,7 @@
     </div>
     <loading v-show="loadingFlag"></loading>
     <scroll ref="scroll" @scroll="contentScroll" @pullingUp="loadMore">
-      <newsList :newsList = '$store.state.guoWaiNewsList' :typeName = 'typeName' v-show="!loadingFlag"></newsList>
+      <newsList :newsList = 'guoWaiNewList' :typeName = 'typeName' v-show="!loadingFlag"></newsList>
     </scroll>
     <backTop @click.native="backTop()" v-show="!scrollFlag"></backTop>
  </div>
@@ -23,11 +23,12 @@ export default {
   name: 'internation',
   data() {
     return {
-      loadingFlag: true,
-      scrollFlag: true,
-      typeName: '国际',
-      num: 50,
-      page: 1
+      loadingFlag: true,  // 控制加载动画的显隐
+      scrollFlag: true,   // 控制返回顶部按钮的显隐
+      typeName: '国际',   // title的名称
+      num: 50,            // 初始化请求数据的个数 
+      page: 1,            // 初始化请求数据的页面
+      guoWaiNewList: []   // 保存国内新闻列表数据
     }
   },
   methods: {
@@ -41,6 +42,21 @@ export default {
         this.scrollFlag = true
       }
     },
+    pageInit() {  // 页面数据初始化
+      this.$http.get('world/index',  {
+        "key": "fa63572e04fc04d2534dc83c9a3ee96a",
+        "num": this.num
+      },  response => {
+        if (response.status >= 200 && response.status < 300) {
+          this.guoWaiNewList = response.data.newslist
+          setTimeout(() => {
+            this.loadingFlag = false
+          }, 600);
+        } else {
+          console.log(response.message)
+        }
+      });
+    },
     // 加载更多
     loadMore() {
       this.page += 1
@@ -51,7 +67,8 @@ export default {
       },  response => {
         if (response.status >= 200 && response.status < 300) {
           console.log(response.data.newslist.length)
-          this.$store.commit('AddGuoWaiNewsList', response.data.newslist)
+          // 只有能改变原数组的方法才支持响应式更新
+          this.guoWaiNewList = this.guoWaiNewList.concat(response.data.newslist)
           this.$refs.scroll.scroll.refresh()
           this.$refs.scroll.scroll.finishPullUp()
         } else {
@@ -67,24 +84,17 @@ export default {
     backTop
   },
   created() {
-    if (this.$store.state.internationalInitLoad) {
-      this.$http.get('world/index',  {
+    this.$http.get('world/index',  {
         "key": "fa63572e04fc04d2534dc83c9a3ee96a",
         "num": this.num
       },  response => {
         if (response.status >= 200 && response.status < 300) {
-          this.$store.commit('changeGuoWaiNewsList', response.data.newslist);
-          this.$store.commit('changeinternational', false)
-          setTimeout(() => {
-            this.loadingFlag = false
-          }, 400);
+          this.guoWaiNewList = response.data.newslist
+          this.loadingFlag = false
         } else {
           console.log(response.message)
         }
       });
-    } else {
-      this.loadingFlag = false
-    }
   },
 }
 

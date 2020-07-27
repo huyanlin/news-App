@@ -51,7 +51,10 @@ export default {
   },
   components: {
    
-  }
+  },
+  created() {
+    console.log(this.$route.meta.keepAlive)
+  },
 }
 </script>
 

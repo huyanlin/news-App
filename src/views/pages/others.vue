@@ -45,7 +45,6 @@ export default {
       this.$store.commit('changeItemIndex', index);
       this.url = url
       if(this.url !== this.$store.state.oldUrl) {
-        this.handleScroll()
         this.loadingFlag = true
         this.$store.commit('saveUrl', this.url)
         this.$http.get(this.url,  {
@@ -54,9 +53,7 @@ export default {
         },  response => {
           if (response.status >= 200 && response.status < 300) {
             this.$store.commit('changeNewsList', response.data.newslist);
-            setTimeout(() => {
-              this.loadingFlag = false
-            }, 400);
+            this.loadingFlag = false
           } else {
             console.log(response.message);
           }
@@ -64,15 +61,7 @@ export default {
       }
       
     },
-    // 实现页面跳转，滚动条自动在顶部
-    handleScroll () { //改变元素content的scrollTop
-      var offsetTop = document.querySelector('.content').scrollTop;
-        document.querySelector('.content').scrollTop = 50
-        setTimeout(() => {
-          document.querySelector('.content').scrollTop = 0
-        }, 500);
-      
-    },
+
   },
   computed: {
     title() {

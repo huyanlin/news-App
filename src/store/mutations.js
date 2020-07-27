@@ -33,30 +33,17 @@ export default {
   changeNewsDetailsInfo (state, newsDetailsInfo) {
     state.newsDetailsInfo = newsDetailsInfo
   },
-  // 初始化tabs页面完成，修改状态
-  changeGuoNei(state, flag) {
-    state.guoNeiInitLoad = flag
-  },
   changeinternational(state, flag) {
     state.internationalInitLoad = flag
   },
   changeYuLe(state, flag) {
     state.yuLeInitLoad = flag
   },
-  changeGuoNeiNewsList(state, newList) {
-    state.guoNeiNewsList = newList
-  },
   changeGuoWaiNewsList(state, newList) {
     state.guoWaiNewsList = newList
   },
   changeYuLeNewsList(state, newList) {
     state.yuLeNewsList = newList
-  },
-  // 向国内新闻中追加信息
-  AddGuoNeiNewsList(state, newList) {
-    for (const item of newList) {
-      state.guoNeiNewsList.push(item)
-    }
   },
   // 向国外新闻中追加信息
   AddGuoWaiNewsList(state, newList) {

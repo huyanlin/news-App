@@ -1,4 +1,4 @@
-<!--  -->
+<!-- 国内新闻界面 -->
 <template>
  <div class="guonei">
     <div class="header">
@@ -6,8 +6,8 @@
       <div class="title">{{ typeName + "新闻" }}</div>
     </div>
     <loading v-show="loadingFlag"></loading>
-    <scroll ref="scroll" @scroll="contentScroll" @pullingUp="loadMore">
-      <newsList :newsList = '$store.state.guoNeiNewsList' :typeName = 'typeName' v-show="!loadingFlag"></newsList>
+    <scroll @scroll="contentScroll" @pullingUp="loadMore" ref="scroll">
+      <newsList :newsList = 'guoNeiNewList' :typeName = 'typeName' v-show="!loadingFlag"></newsList>
     </scroll>
     <backTop @click.native="backTop()" v-show="!scrollFlag"></backTop>
  </div> 
@@ -23,26 +23,39 @@ export default {
   name: 'guonei',
   data() {
     return {
-      loadingFlag: true,
-      scrollFlag: true,
-      typeName: '国内',
-      num: 50,
-      page: 1
+      loadingFlag: true,  // 控制加载动画的显隐
+      scrollFlag: true,   // 控制返回顶部按钮的显隐
+      typeName: '国内',   // title的名称
+      num: 50,            // 初始化请求数据的个数 
+      page: 1,            // 初始化请求数据的页面
+      guoNeiNewList: []   // 保存国内新闻列表数据
     }
   },
   methods: {
-    backTop() {
+    backTop() {   // 返回顶部
       this.$refs.scroll.backTop(0, 0, 600)
     },
-    contentScroll(position) {
+    contentScroll(position) {   // 根据滚动条滑动的距离，控制返回顶部按钮的显隐
       if ((-position.y) > 900) {
         this.scrollFlag = false
       } else {
         this.scrollFlag = true
       }
     },
-    // 加载更多
-    loadMore() {
+    pageInit() {  // 页面数据初始化
+      this.$http.get('guonei/index',  {
+        "key": "fa63572e04fc04d2534dc83c9a3ee96a",
+        "num": this.num
+      },  response => {
+        if (response.status >= 200 && response.status < 300) {
+          this.guoNeiNewList = response.data.newslist
+          this.loadingFlag = false
+        } else {
+          console.log(response.message)
+        }
+      });
+    },
+    loadMore() {  // 加载更多
       this.page += 1
       this.$http.get('guonei/index',  {
         "key": "fa63572e04fc04d2534dc83c9a3ee96a",
@@ -50,8 +63,8 @@ export default {
         "page": this.page
       },  response => {
         if (response.status >= 200 && response.status < 300) {
-          console.log(response.data.newslist.length)
-          this.$store.commit('AddGuoNeiNewsList', response.data.newslist)
+          // 只有能改变原数组的方法才支持响应式更新
+          this.guoNeiNewList = this.guoNeiNewList.concat(response.data.newslist)
           this.$refs.scroll.scroll.refresh()
           this.$refs.scroll.scroll.finishPullUp()
         } else {
@@ -66,25 +79,8 @@ export default {
     scroll,
     backTop
   },
-  created() {
-    if (this.$store.state.guoNeiInitLoad) {
-      this.$http.get('guonei/index',  {
-        "key": "fa63572e04fc04d2534dc83c9a3ee96a",
-        "num": this.num
-      },  response => {
-        if (response.status >= 200 && response.status < 300) {
-          this.$store.commit('changeGuoNeiNewsList', response.data.newslist);
-          this.$store.commit('changeGuoNei', false)
-          setTimeout(() => {
-            this.loadingFlag = false
-          }, 600);
-        } else {
-          console.log(response.message)
-        }
-      });
-    } else {
-      this.loadingFlag = false
-    }
+  mounted() {
+    this.pageInit()
   },
 }
 

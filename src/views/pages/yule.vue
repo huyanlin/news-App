@@ -7,7 +7,7 @@
     </div>
     <loading v-show="loadingFlag"></loading>
     <scroll ref="scroll" @scroll="contentScroll" @pullingUp="loadMore">
-      <newsList :newsList = '$store.state.yuLeNewsList' :typeName = 'typeName' v-show="!loadingFlag"></newsList>
+      <newsList :newsList = 'yuLeNewList' :typeName = 'typeName' v-show="!loadingFlag"></newsList>
     </scroll>
     <backTop @click.native="backTop()" v-show="!scrollFlag"></backTop>
   </div>
@@ -23,11 +23,12 @@ export default {
   name: 'yule',
   data() {
     return {
-      loadingFlag: true,
-      scrollFlag: true,
-      typeName: '娱乐',
-      num: 50,
-      page: 1
+      loadingFlag: true,  // 控制加载动画的显隐
+      scrollFlag: true,   // 控制返回顶部按钮的显隐
+      typeName: '娱乐',   // title的名称
+      num: 50,            // 初始化请求数据的个数 
+      page: 1,            // 初始化请求数据的页面
+      yuLeNewList: []   // 保存国内新闻列表数据
     }
   },
   methods: {
@@ -66,25 +67,18 @@ export default {
     scroll,
     backTop
   },
-  created() {
-    if (this.$store.state.yuLeInitLoad) {
-      this.$http.get('huabian/index',  {
+  mounted() {
+    this.$http.get('huabian/index',  {
         "key": "fa63572e04fc04d2534dc83c9a3ee96a",
         "num": this.num
       },  response => {
         if (response.status >= 200 && response.status < 300) {
-          this.$store.commit('changeYuLeNewsList', response.data.newslist);
-          this.$store.commit('changeYuLe', false)
-          setTimeout(() => {
-            this.loadingFlag = false
-          }, 400);
+          this.yuLeNewList = response.data.newslist
+          this.loadingFlag = false
         } else {
           console.log(response.message)
         }
       });
-    } else {
-      this.loadingFlag = false
-    }
   },
 }
 

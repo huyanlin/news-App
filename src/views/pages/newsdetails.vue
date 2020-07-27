@@ -12,13 +12,13 @@
           <div class="load-style" v-show="loadingFlag">
             <loading></loading>
           </div>
-          <!-- <frameset cols="100%" v-if="this.$store.state.newsDetailsInfo[0].content === ''" v-show="!loadingFlag">
+          <frameset cols="100%" v-if="this.$store.state.newsDetailsInfo[0].content === ''" v-show="!loadingFlag">
             <frame :src="this.$route.query.url" />
           </frameset>
           <div class="content-info" v-else v-show="!loadingFlag" v-for="(item, index) in this.$store.state.newsDetailsInfo" :key="index">
             <div class="content-title">{{ item.title }}</div>
             <div class="content-item" v-html="item.content"></div>
-          </div> -->
+          </div>
         </div>
       </scroll>
     </div>
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.back();
+      this.$router.back(1);
     }
   },
   components: {
@@ -51,19 +51,17 @@ export default {
     }
   },
   created() {
-    // this.$http.get('txapi/htmltext/index', {
-    //   "key": "fa63572e04fc04d2534dc83c9a3ee96a",
-    //   "url": this.$route.query.url
-    // },  response => {
-    //   if (response.status >= 200 && response.status < 300) {
-    //     this.$store.commit('changeNewsDetailsInfo', response.data.newslist);
-    //     setTimeout(() => {
-    //       this.loadingFlag = false
-    //     }, 600);
-    //   } else {
-    //     console.log(response.message);
-    //   }
-    // });
+    this.$http.get('txapi/htmltext/index', {
+      "key": "fa63572e04fc04d2534dc83c9a3ee96a",
+      "url": this.$route.query.url
+    },  response => {
+      if (response.status >= 200 && response.status < 300) {
+        this.$store.commit('changeNewsDetailsInfo', response.data.newslist);
+        this.loadingFlag = false
+      } else {
+        console.log(response.message);
+      }
+    });
   },
 }
 

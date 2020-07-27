@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="img">
-        <img v-lazy="item.picUrl" alt="">
+        <img v-lazy="item.picUrl" alt="" :key="item.picUrl">
       </div>
     </div>
   </div>
